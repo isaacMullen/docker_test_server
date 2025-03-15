@@ -4,7 +4,7 @@ services:
     ports:
       - '9000:9000'
     volumes:
-      - ./docker_test_server:/docker_test_server
+      - .:/docker_test_server
 
   db:
     image: postgres:latest
