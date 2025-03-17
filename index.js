@@ -1,26 +1,49 @@
-import express from 'express';  // Importing the Express library
-import path from 'path';  // Importing the path module for working with file paths
-import { fileURLToPath } from 'url';  // Importing the fileURLToPath function from the 'url' module
-import { dirname } from 'path';  // Importing the dirname function from the 'path' module
+import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
 // Set up __dirname in ES Module context
-const __filename = fileURLToPath(import.meta.url);  // Get the current file's absolute path
-const __dirname = dirname(__filename);  // Get the directory name of the current file
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-// Create an Express application
 const app = express();
-
-// Set up static file serving from the 'public' folder
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json()); // Middleware to parse JSON requests
 
-// Define the route for the root ('/') path
+// Serve index.html
 app.get('/', (req, res) => {
-  // Send the index.html file when the root route is accessed
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Set the port for the app to listen on (use environment variable or default to 3000)
+// AI Route to communicate with Ollama
+app.post('/ask-ai', async (req, res) => {
+    const { prompt } = req.body;
+    if (!prompt) {
+        return res.status(400).json({ error: "No prompt provided." });
+    }
+
+    try {
+        const ollamaResponse = await fetch("http://localhost:11434/api/generate", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ model: "mistral", prompt }),
+        });
+
+        if (!ollamaResponse.ok) {
+            throw new Error("Failed to get response from Ollama.");
+        }
+
+        const data = await ollamaResponse.json();
+        res.json({ response: data.response });
+    } catch (error) {
+        console.error("Error fetching AI response:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+// Start server
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+    console.log(`Server running at http://localhost:${port}`);
 });

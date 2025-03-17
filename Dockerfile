@@ -20,4 +20,4 @@ ENV PORT=9000
 EXPOSE 9000
 
 # Start the application
-CMD [ "node", "index.js" ]
+CMD [ "npm", "start" ]

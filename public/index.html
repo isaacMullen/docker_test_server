@@ -14,19 +14,22 @@
       margin: 0 auto;
     }
     input {
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      margin-bottom: 20px;
-      box-sizing: border-box;
-    }
-    .output {
-      padding: 10px;
-      background-color: #f0f0f0;
-      border: 1px solid #ccc;
-      font-size: 16px;
-      min-height: 30px;
-    }
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+}
+.output {
+  padding: 10px;
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  min-height: 40px;
+  border-radius: 5px;
+}
+
   </style>
 </head>
 <body>
@@ -38,14 +41,13 @@
   </div>
 
   <script>
-    // Get references to the input field and output section
-    const inputField = document.getElementById('userInput');
-    const outputSection = document.getElementById('outputSection');
-
-    // Event listener for input field changes
-    inputField.addEventListener('input', function() {
-      // Display the input value in the output section
-      outputSection.textContent = inputField.value || 'Output will appear here...';
+    document.addEventListener("DOMContentLoaded", function () {
+      const inputField = document.getElementById('userInput');
+      const outputSection = document.getElementById('outputSection');
+  
+      inputField.addEventListener('input', function () {
+        outputSection.textContent = inputField.value || 'Output will appear here...';
+      });
     });
   </script>
 </body>
