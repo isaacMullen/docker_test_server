@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Input Output</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+    }
+    .output {
+      padding: 10px;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      min-height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Input field -->
+    <input type="text" id="userInput" placeholder="Enter some text here">
+    <!-- Output section -->
+    <div class="output" id="outputSection">Output will appear here...</div>
+  </div>
+
+  <script>
+    // Get references to the input field and output section
+    const inputField = document.getElementById('userInput');
+    const outputSection = document.getElementById('outputSection');
+
+    // Event listener for input field changes
+    inputField.addEventListener('input', function() {
+      // Display the input value in the output section
+      outputSection.textContent = inputField.value || 'Output will appear here...';
+    });
+  </script>
+</body>
+</html>
